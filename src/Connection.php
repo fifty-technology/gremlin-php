@@ -486,12 +486,7 @@ class Connection
 
             if(isset($this->_sessionUuid))
             {
-                $msg = new Message();
-                $msg->op = "close";
-                $msg->processor = "session";
-                $msg->setArguments(['session'=>$this->_sessionUuid]);
-                $msg->registerSerializer(new Json());
-                $this->run($msg, NULL, NULL, NULL, FALSE); // Tell run not to expect a return
+                $this->closeSession();
             }
 
             $write = @fwrite($this->_socket, $this->webSocketPack("", 'close'));
@@ -502,12 +497,22 @@ class Connection
             }
             @stream_socket_shutdown($this->_socket, STREAM_SHUT_RDWR); //ignore error
             $this->_socket = NULL;
-            $this->_sessionUuid = NULL;
 
             return TRUE;
         }
     }
 
+    protected function closeSession()
+    {
+        $msg = new Message();
+        $msg->op = "close";
+        $msg->processor = "session";
+        $msg->setArguments(['session'=>$this->_sessionUuid]);
+        $msg->registerSerializer(new Json());
+        $this->run($msg, NULL, NULL, NULL, FALSE); // Tell run not to expect a return
+
+        $this->_sessionUuid = NULL;
+    }
 
     /**
      * Start a transaction.
@@ -536,7 +541,7 @@ class Connection
         $this->message->setArguments(['session'=>$this->_sessionUuid]);
         $this->message->processor = 'session';
         $this->message->gremlin = $this->graph . '.tx().open()';
-        $this->run();
+        $this->send();
         $this->_inTransaction = TRUE;
         return TRUE;
     }
@@ -610,8 +615,9 @@ class Connection
             $this->message->gremlin = $this->graph . '.tx().rollback()';
         }
 
-        $this->run();
+        $this->send();
         $this->_inTransaction = FALSE;
+        $this->closeSession();
         return TRUE;
     }
 
