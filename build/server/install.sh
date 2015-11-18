@@ -5,7 +5,7 @@ export JAVA_HOME=/usr/lib/jvm/java-8-oracle
 export JRE_HOME=/usr/lib/jvm/java-8-oracle
 
 # Install gremlin-server
-wget --no-check-certificate -O $HOME/apache-gremlin-server-$GREMLINSERVER_VERSION-incubating-bin.zip https://www.apache.org/dist/incubator/tinkerpop/$GREMLINSERVER_VERSION-incubating/apache-gremlin-server-$GREMLINSERVER_VERSION-incubating-bin.zip
+wget --no-check-certificate -O $HOME/apache-gremlin-server-$GREMLINSERVER_VERSION-incubating-bin.zip https://dist.apache.org/repos/dist/dev/incubator/tinkerpop/$GREMLINSERVER_VERSION-incubating/apache-gremlin-server-$GREMLINSERVER_VERSION-incubating-bin.zip
 unzip $HOME/apache-gremlin-server-$GREMLINSERVER_VERSION-incubating-bin.zip -d $HOME/
 # make a secure server
 mkdir $HOME/secure
