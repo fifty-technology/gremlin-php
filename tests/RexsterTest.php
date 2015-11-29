@@ -728,4 +728,24 @@ class RexsterTest extends RexsterTestCase
 
         $db->close();
     }
+
+    /**
+     * Lets test getting a graph object
+     *
+     * @return void
+     */
+    public function testGetGraphObject()
+    {
+        $this->markTestSkipped("Skipping test until TP 3.1.1, see TINKERPOP3-978");
+        $db = new Connection([
+            'host' => 'localhost',
+            'port' => 8182,
+            'graph' => 'graph',
+            'retryAttempts' => 5
+        ]);
+        $db->open();
+        $result = $db->send("graph");
+        $this->assertTrue(isset($result[0]['vertices'][5]), "vertex should be set");
+        $this->assertTrue(isset($result[0]['edges'][5]), "edge should be set");
+    }
 }
