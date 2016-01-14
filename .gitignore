@@ -7,3 +7,7 @@
 /build/logs/*
 /build/coverage
 
+/nbproject/private/
+nbproject/project.properties
+
+nbproject/project.xml

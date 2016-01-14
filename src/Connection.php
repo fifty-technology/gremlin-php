@@ -232,6 +232,9 @@ class Connection
         $data = $head = @stream_get_contents($this->_socket, 1);
             $head = unpack('C*', $head);
 
+            if(!isset($head[1])){
+               return false;
+            }
             //extract opcode from first byte
             $isBinary = (($head[1] & 15) == 2) && $this->_acceptDiffResponseFormat;
 
