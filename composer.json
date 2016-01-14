@@ -1,5 +1,5 @@
 {
-    "name": "brightzone/gremlin-php",
+    "name": "fifty-technology/gremlin-php",
     "description": "gremlin-server client for php",
     "minimum-stability": "stable",
     "license": "Apache 2",

@@ -272,7 +272,9 @@ class Message
     {
         if(!isset($this->args['bindings']))
         {
-            $this->args['bindings'] = [];
+            $this->args['bindings'] = [
+                "#jsr223.groovy.engine.keep.globals" => "phantom"
+            ];
         }
         $this->args['bindings'][$bind] = $value;
     }
