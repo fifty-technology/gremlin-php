@@ -339,7 +339,10 @@ class Connection
                 $this->error($unpacked['status']['message'] . " > " . implode("\n", $unpacked['status']['attributes']), $unpacked['status']['code']);
             }
 
-            $fullData = array_merge($fullData, $unpacked['result']['data']);
+            // $fullData = array_merge($fullData, $unpacked['result']['data']);
+            foreach ($unpacked['result']['data'] as $r) {
+                $fullData[] = $r;
+            }
         }
         while($unpacked['status']['code'] === 206);
 
